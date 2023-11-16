@@ -1,0 +1,290 @@
+<%- include('a_header') %>
+
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="mb-3">Products</h1>
+                        <div class="col-4">
+
+                        </div>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <div class="container">
+                            <button class="btn" style="background-color: #41A6DF;  float: right; color:white"
+                                data-toggle="modal" data-target="#myModal">+ ADD NEW</button>
+                            <div class="modal fade" id="myModal" role="dialog">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">ADD NEW PRODUCTS</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <form action="/product_add" method="post" enctype="multipart/form-data">
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="txt_pronm">Product Name:</label>
+                                                    <input type="text" class="form-control" id="txt_pronm"
+                                                        name="txt_pronm" placeholder="Enter Product Name" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="catid">Category :</label>
+                                                    <select name="catid" class="form-control" id="catid" required>
+                                                        <option value="" disabled="disabled">Select Categories</option>
+                                                        <% cat.forEach((row)=> { %>
+                                                            <option value="<%= row._id %>">
+                                                                <%= row.cat_name %>
+                                                            </option>
+                                                            <% }) %>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="txt_pronm">Product Description:</label>
+                                                    <textarea name="p_des" class="form-control" id="p_des" cols="30"
+                                                        rows="4" placeholder="Enter Product Description"></textarea>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="">Product Size:</label><br>
+                                                            <input type="checkbox" class="ml-2" id="chk_S" value="S"
+                                                                name="chk_pro[]">
+                                                            <label for="chk_S">S</label>
+                                                            <input type="checkbox" class="ml-2" id="chk_M" value="M"
+                                                                name="chk_pro[]">
+                                                            <label for="chk_M">M</label>
+                                                            <input type="checkbox" class="ml-2" id="chk_L" value="L"
+                                                                name="chk_pro[]">
+                                                            <label for="chk_L">L</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="">Product Gst:</label><br>
+                                                            <input type="radio" value="18" class="ml-2" id="red_18"
+                                                                name="gst">
+                                                            <label for="red_18">18%</label>
+                                                            <input type="radio" value="No" class="ml-2" id="red_no"
+                                                                name="gst">
+                                                            <label for="red_no">No Gst</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="proimg">Product Image :</label>
+                                                    <input type="file" class="form-control" id="proimg" name="proimg"
+                                                        required>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" name="prosub"
+                                                    class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+
+                        <div class="card-body table-responsive p-2">
+
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Product</th>
+                                        <th>Categories</th>
+                                        <th>Sizes</th>
+                                        <th>Image</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% user.forEach((row,index)=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= index+1 %>
+                                            </td>
+                                            <td>
+                                                <%= row.product_name %>
+                                            </td>
+
+                                            <td>
+                                                <%= row.cat_id.cat_name %>
+                                            </td>
+                                            <td>
+                                                <%= row.size %>
+                                            </td>
+                                            <td><img src='<%= row.p_img %>' height="50px" width="50px" alt="" srcset="">
+                                            </td>
+                                            <td><a href="/pro_del/<%= row._id %>"><button class="btn btn-warning del"><i
+                                                            class="fa fa-trash" style="color:black"></i></button></a>
+                                                <button type="button" class="btn editbtn btn-success openEditMdl"
+                                                    data-toggle="modal" data-img="" data-iid="<%= row._id %>"
+                                                    data-target="#editmodel"><i class="fa fa-edit"></i></button>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+
+    <div class="modal fade" id="editmodel" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">EDIT PRODUCTS</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form action="/product_edit" method="post" id="editfrom" enctype="multipart/form-data">
+
+                    <div class="modal-body">
+                        <input type="hidden" name="id" id="id">
+                        <input type="hidden" name="oldimg" id="oldimg1">
+                        <div class="form-group">
+                            <label for="txt_pronm">Product Name:</label>
+                            <input type="text" class="form-control" id="txt_pronm1" name="txt_pronm"
+                                placeholder="Enter Product Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="catid">Category :</label>
+                            <select name="catid" class="form-control" id="catid1" required>
+                                <option value="" disabled="disabled">Select Categories</option>
+                                <% cat.forEach((row)=> { %>
+                                    <option value="<%= row._id %>">
+                                        <%= row.cat_name %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="txt_pronm">Product Description:</label>
+                            <textarea name="p_des" class="form-control" id="p_des1" cols="30" rows="4"
+                                placeholder="Enter Product Description"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Product Size:</label><br>
+                                    <input type="checkbox" class="ml-2" id="chk_S1" value="S" name="chk_pro1[]">
+                                    <label for="chk_S">S</label>
+                                    <input type="checkbox" class="ml-2" id="chk_M1" value="M" name="chk_pro1[]">
+                                    <label for="chk_M">M</label>
+                                    <input type="checkbox" class="ml-2" id="chk_L1" value="L" name="chk_pro1[]">
+                                    <label for="chk_L">L</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Product Gst:</label><br>
+                                    <input type="radio" value="18" class="ml-2" id="red_18" name="gst">
+                                    <label for="red_18">18%</label>
+                                    <input type="radio" value="No" class="ml-2" id="red_no" name="gst">
+                                    <label for="red_no">No Gst</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <label for="proimg">Product Image :</label>
+                                    <input type="file" class="form-control" id="proimg" name="proimg">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="">Old Image :</label><br>
+                                    <img src="" alt="" height="100px" width="100px" id="oldimg">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="productbtn" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <%- include('a_footer') %>
+
+        <script>
+
+            $('.editbtn').click(function (e) {
+                e.preventDefault();
+                let id = $(this).data('iid');
+                $.ajax({
+                    type: "GET",
+                    url: "/Pro_Edit_Get/" + id,
+                    success: function (response) {
+                        console.log(response);
+                        $('#txt_pronm1').val(response.data.product_name);
+                        $('#catid1').val(response.data.cat_id);
+                        $('#p_des1').val(response.data.discription);
+
+                        if (response.data.gst === "No") {
+                            $("#editfrom input[name='gst'][value='No']").attr("checked", true);
+                        } else {
+                            $("#editfrom input[name='gst'][value='18']").attr("checked", true);
+                        }
+
+                        let arr = response.data.size;
+                        let newfun = arr.split(',');
+                        console.log(newfun);
+                        if (newfun.includes("S")) {
+                            $("#editfrom input[name='chk_pro1[]'][value='S']").attr("checked", true);
+                        }
+                        if (newfun.includes("M")) {
+                            $("#editfrom input[name='chk_pro1[]'][value='M']").attr("checked", true);
+                        }
+                        if (newfun.includes("L")) {
+                            $("#editfrom input[name='chk_pro1[]'][value='L']").attr("checked", true);
+                        }
+
+
+
+                        $('#oldimg').attr('src', response.data.p_img);
+                        $('#oldimg1').val(response.data.p_img);
+                        $('#id').val(response.data._id);
+                    }
+                });
+                //alert(id)
+            });
+        </script>
+        <% if(message) { %>
+            <% if(message.type=='error' ) { %>
+                <script>
+                    toastr.error('<%= message.message %>');
+                </script>
+                <% }%>
+                    <% } %>
+
+                        <% if(message) { %>
+                            <% if(message.type=='success' ) { %>
+                                <script>
+                                    toastr.success('<%= message.message1 %>');
+                                </script>
+                                <% }%>
+                                    <% } %>

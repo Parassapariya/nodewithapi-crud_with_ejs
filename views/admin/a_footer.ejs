@@ -62,6 +62,9 @@
     <script src="/admin/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="/admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script src="/admin/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+
+    <!-- Toastr -->
+  <script src="/admin/plugins/toastr/toastr.min.js"></script>
     <script>
       /*** add active class and stay opened when selected ***/
     var url = window.location;
@@ -78,10 +81,7 @@
         if (this.href) {
             return this.href == url || url.href.indexOf(this.href) == 0;
         }
-    }).parentsUntil(".nav-sidebar < .nav-treeview").addClass('menu-open').prev('a').addClass('active');
-      $("input[data-bootstrap-switch]").each(function(){
-          $(this).bootstrapSwitch('state', $(this).prop('checked'));
-        })
+    })
     
     
         </script>
