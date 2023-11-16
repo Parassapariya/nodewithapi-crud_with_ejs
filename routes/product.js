@@ -60,13 +60,7 @@ route.post('/product_add', uplord, async (req, res) => {
             message1: 'Product added successfully'
         }
         res.redirect('/product');
-    } else {
-        req.session.message = {
-            type: 'error',
-            message: 'Product add not successfully'
-        }
-        res.redirect('/product');
-    }
+    } 
 });
 
 route.get('/pro_del/:id',async (req,res) =>{
@@ -81,7 +75,7 @@ route.get('/pro_del/:id',async (req,res) =>{
         }
         req.session.message = {
             type: 'success',
-            message1: 'Product deleted successfully'
+            message: 'Product deleted successfully'
         }
         res.redirect('/product');
     } else {
@@ -135,15 +129,13 @@ route.post('/product_edit',uplord,async(req,res)=>{
 
         req.session.message = {
             type: 'success',
-            message1: 'Product Update successfully'
+            message: 'Product Update successfully'
         }
         res.redirect('/product');
 
     } else {
         console.log('Document not found.');
     }
-    
-    // console.log(Data);
 });
 
 module.exports = route;

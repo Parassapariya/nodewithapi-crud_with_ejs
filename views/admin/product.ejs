@@ -273,18 +273,12 @@
                 //alert(id)
             });
         </script>
-        <% if(message) { %>
-            <% if(message.type=='error' ) { %>
-                <script>
-                    toastr.error('<%= message.message %>');
-                </script>
-                <% }%>
-                    <% } %>
+       
 
                         <% if(message) { %>
                             <% if(message.type=='success' ) { %>
                                 <script>
-                                    toastr.success('<%= message.message1 %>');
+                                    toastr.success('<%= message.message %>');
                                 </script>
                                 <% }%>
                                     <% } %>
